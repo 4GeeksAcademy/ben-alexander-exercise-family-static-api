@@ -7,7 +7,7 @@ class FamilyStructure:
         self._members = [
             {
                 "id": self._generateId(),
-                "first_name": "Jhon",
+                "first_name": "John",
                 "last_name": last_name,
                 "age": 33,
                 "lucky_numbers":[7, 13, 22]
@@ -31,20 +31,21 @@ class FamilyStructure:
     def _generateId(self):
         return randint(0, 99999999)
 
-    def add_member(self, member):
-        self._members.append(member)
-        return None
-
+    
     def delete_member(self, id):
-        for position in range(len(self._members)):
-            if self._members[position]["id"] == id:
-                self._members.pop(position)
-                return None
+        members = list(filter(lambda x: x["id"] == id, self._members))
+        return members
+        
 
     def get_member(self, id):
-        for member in self._members:
-            if member ["id"] == id:
-                return member
-                
+        member = list(filter(lambda x: x["id"] == id, self._members))
+        return member
+
+    
     def get_all_members(self):
         return self._members
+        
+    def add_member(self, member):
+        member["id"] = self._generateId()
+        self._members.append(member)
+        return None

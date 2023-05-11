@@ -23,22 +23,27 @@ def get_all_members():
     members = jackson_family.get_all_members()
     return jsonify(members), 200
 
-@app.route('/member/<int:id>', methods=['DELETE'])
-def delete_member(id):
-    member = jackson_family.delete_member(id)
-    return jsonify({"done": True}), 200
-
+#Get a memeber
 @app.route('/member/<int:id>', methods=['GET'])
-def get_member(id):
-    member = jackson_family.get_member(id)
-    return jsonify(member), 200
+def get_members(id):
+    members = jackson_family.get_member(id)
+    return jsonify(members), 200
 
-@app.route('/member', methods=['POST'])
+@app.route('/create/member', methods=['POST'])
 def add_member():
     member = request.json
     jackson_family.add_member(member)
-    return jsonify(""), 200
+    if not member:
+         return jsonify({"error":"No family member found" }),400
+    return jsonify("family memeber added"), 200
+
+@app.route('/member/<int:id>', methods=['DELETE'])
+def delete_member(id):
+    member = jackson_family.delete_member(id)
+    return jsonify({"done" : "true"}), 200
 
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+
+
